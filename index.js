@@ -13,7 +13,8 @@ axios({
     let data = []
     textGroups.forEach( (eachTextGroup) => {
         if(eachTextGroup.textContent.match(/\d+\. /g)){
-            data.push(eachTextGroup.textContent.replace("Matt.", "Matthew"))
+            eachTextGroup.textContent = eachTextGroup.textContent.replace("Matt.", "Matthew")
+            data.push(eachTextGroup.textContent.replace(/(?<=\d)\,\s(?=\d)/, "-"))
         }
     })
     // console.log(data)
@@ -53,14 +54,17 @@ axios({
     let searchableData = {
         Matthew: {},
         Mark: {},
+        John: {},
         Luke: {},
-        John: {}
     }
 
     sortedData.forEach( (eachEvent) => {
         eachEvent.references.forEach( (eachReference) => {
             // let group = [...eachReference.matchAll(/(?<title>\w+)/g)][0].groups
+            // eachReference.replace(/(?<=\d)\, (?=\d)/, "-")
             let group = [...eachReference.matchAll(/(?<book>\w+) (?<chapter>\d{1,3}):(?<start_verse>\d{1,3})-?(?<end_verse>\d{1,3})?—?(?<next_chapter>\d{1,3})?:?(?<next_chapter_end_verse>\d{1,3})?/g)][0].groups
+            console.log(group);
+            if(group.end_verse === undefined){group.end_verse = group.start_verse}
             // `/(?<book_num>\d)? ?(?<book>\S*) (?<chapter>\d{1,3}):(?<start_verse>\d{1,3})-?(?<end_verse>\d{1,3})?/gim`
             if(!searchableData[group.book]?.[group.chapter]) {searchableData[group.book][group.chapter] = []}
             if(!searchableData[group.book]?.[group?.next_chapter]) {searchableData[group.book][group.next_chapter] = []}
