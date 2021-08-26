@@ -1,5 +1,28 @@
 # Gospel Harmony
 
+
+# How to Use
+
+Use the function [here](./getGospelEvent.js) which takes `givenVerse` then returns a `gospelEventObject`
+```json
+{
+  "eventNumber": 224,
+  "title": "Jesus is betrayed and arrested",
+  "references": [
+    "Matthew 26:47-56",
+    "Mark 14:43-52",
+    "Luke 22:47-53",
+    "John 18:1-1"
+  ]
+}
+```
+### Note
+You might need to change the path for `keyedData.json` and `searchableData.json` depending on where you use this function.
+
+### Standalone Example:
+See [here](./example.js) for a Standalone example.
+
+# Structure
 ### `keyData.json` is sorted by event number
 #### One Entry
 ```json
@@ -14,8 +37,8 @@
 ### `searchableData.json` is structured as follows
 ```json
 {
-  "books": {
-    "chapters": [
+  "Matthew": {
+    "1": [
         {
             "startVerse": 1,
             "endVerse": 17,
@@ -25,14 +48,3 @@
   }
 }
 ```
-
-# How to Use
-Assume you are given a verse: `John 18:11` as a string, titled `givenVerse`
-```js
-let verseData = [...givenVerse.matchAll(/(?<book>\w*) (?<chapter>\d{1,3}):(?<startVerse>\d{1,3})-?(?<lastVerse>\d{1,3})?/g)][0].groups
-let eventNumber = searchableData[verseData.book][verseData.chapter].find( v => (v.startVerse <= verseData.startVerse && verseData.startVerse <= v.lastVerse)).eventNumber
-let eventData = keyedData[eventNumber]
-```
-See [here](./getSimilarPassages.js) for an example.
-
-Easiest use is slap it into a function that takes a parameter for givenVerse then returns `eventNumber` and `eventData`
