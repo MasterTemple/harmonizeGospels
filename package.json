@@ -1,0 +1,24 @@
+{
+  "name": "harmonizegospels",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasterTemple/harmonizeGospels.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MasterTemple/harmonizeGospels/issues"
+  },
+  "homepage": "https://github.com/MasterTemple/harmonizeGospels#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "jsdom": "^17.0.0"
+  }
+}
