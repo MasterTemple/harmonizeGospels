@@ -43,7 +43,7 @@ axios({
         // }
         // sortedData.push(obj)
         let group = [...eachGroup.matchAll(/(?<eventNumber>\d+)\. (?<title>[\w\s]+)/g)][0].groups
-        let refs = eachGroup.match(/\w+\.? \d+:\d+\-?\d*/g)
+        let refs = eachGroup.match(/\w+\.? \d+:\d+[\-—]?\d*:?\d*/g)
         keyedData[group.eventNumber] = {
             title: group.title,
             references: refs
