@@ -25,7 +25,7 @@
   }
 }
 ```
-So you could get the Gospel Event Number by calling 
+
 # How to Use
 Assume you are given a verse: `John 18:11` as a string, titled `givenVerse`
 ```js
@@ -34,3 +34,5 @@ let eventNumber = searchableData[verseData.book][verseData.chapter].find( v => (
 let eventData = keyedData[eventNumber]
 ```
 See [here](./getSimilarPassages.js) for an example.
+
+Easiest use is slap it into a function that takes a parameter for givenVerse then returns `eventNumber` and `eventData`
