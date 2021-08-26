@@ -50,5 +50,47 @@ axios({
         }
     })
     fs.writeFileSync("keyedData.json", JSON.stringify(keyedData, null, 2))
-    let searchableData
+    let searchableData = {
+        Matthew: {},
+        Mark: {},
+        Luke: {},
+        John: {}
+    }
+
+    sortedData.forEach( (eachEvent) => {
+        eachEvent.references.forEach( (eachReference) => {
+            // let group = [...eachReference.matchAll(/(?<title>\w+)/g)][0].groups
+            let group = [...eachReference.matchAll(/(?<book>\w+) (?<chapter>\d{1,3}):(?<start_verse>\d{1,3})-?(?<end_verse>\d{1,3})?—?(?<next_chapter>\d{1,3})?:?(?<next_chapter_end_verse>\d{1,3})?/g)][0].groups
+            // `/(?<book_num>\d)? ?(?<book>\S*) (?<chapter>\d{1,3}):(?<start_verse>\d{1,3})-?(?<end_verse>\d{1,3})?/gim`
+            if(!searchableData[group.book]?.[group.chapter]) {searchableData[group.book][group.chapter] = []}
+            if(!searchableData[group.book]?.[group?.next_chapter]) {searchableData[group.book][group.next_chapter] = []}
+
+
+            //idk how to change lastVerse to last book of Bible without lots of work, so im just doing 176
+            if(group.next_chapter){
+
+                searchableData[group.book][group.chapter].push({
+                    startVerse: parseInt(group.start_verse),
+                    lastVerse: 176,
+                    eventNumber: eachEvent.eventNumber,
+                })
+
+                searchableData[group.book][group.next_chapter].push({
+                    startVerse: 1,
+                    lastVerse: parseInt(group.next_chapter_end_verse),
+                    eventNumber: eachEvent.eventNumber,
+                })
+            }else{
+
+                searchableData[group.book][group.chapter].push({
+                    startVerse: parseInt(group.start_verse),
+                    lastVerse: parseInt(group.end_verse),
+                    eventNumber: eachEvent.eventNumber,
+                })
+            }
+        })
+    })
+    
+    fs.writeFileSync("searchableData.json", JSON.stringify(searchableData, null, 2))
+
 })
